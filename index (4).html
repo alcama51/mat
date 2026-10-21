@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#58cc02">
+<title>NaturaQuest — Aprende jugando</title>
+<style>
+:root{--green:#58cc02;--dark:#46a302;--ink:#24313b;--muted:#71808d;--line:#e5e9ec;--bg:#f7faf7;--blue:#1cb0f6;--purple:#a560e8;--gold:#ffc800}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink)}
+button{font:inherit;cursor:pointer}.top{height:68px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(18px,calc((100vw - 1000px)/2));position:sticky;top:0;z-index:3}
+.brand{font-weight:950;font-size:22px;color:var(--dark);letter-spacing:-.7px}.stats{display:flex;gap:16px;font-weight:850}.stat{white-space:nowrap}.stat small{color:var(--muted);font-size:10px;display:block;text-align:center}
+.wrap{max-width:1000px;margin:26px auto;padding:0 18px;display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:22px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:18px}
+.welcome{background:linear-gradient(130deg,#e9ffd9,#f3ffeb);border-color:#d8f3c5;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.eyebrow{color:var(--dark);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:1px}
+h1{font-size:29px;line-height:1.1;margin:8px 0}h2{font-size:20px;margin:0 0 14px}p{color:var(--muted);line-height:1.5;margin:8px 0}
+.mascot{font-size:65px;filter:drop-shadow(0 4px 0 #b9e99a)}
+.unit-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.unit-head p{margin:4px 0}
+.lesson{display:flex;align-items:center;gap:14px;border:2px solid var(--line);border-radius:16px;padding:14px;margin-top:10px;transition:.15s}
+.lesson:hover{border-color:#b8e7a0;transform:translateY(-1px)}.lesson-icon{width:52px;height:52px;border-radius:15px;display:grid;place-items:center;font-size:27px;flex-shrink:0;background:#e9fbdc}
+.lesson:nth-of-type(3) .lesson-icon{background:#e0f5ff}.lesson:nth-of-type(4) .lesson-icon{background:#f2e8ff}
+.lesson-text{flex:1}.lesson-text strong{display:block;font-size:15px}.lesson-text span{font-size:12px;color:var(--muted)}
+.pill{background:#f0f3f5;border-radius:8px;padding:6px 9px;font-size:11px;font-weight:800;color:#63717b}
+.btn{border:0;border-radius:12px;background:var(--green);color:white;padding:12px 17px;font-weight:900;box-shadow:0 4px 0 var(--dark);transition:.1s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--dark)}.btn.secondary{background:#fff;color:var(--dark);border:2px solid #cfe8c1;box-shadow:0 3px 0 #cfe8c1}
+.side .panel{padding:18px}.daily{background:#fff9db;border-color:#f5e6a0}.daily strong{font-size:15px}.progress{height:10px;border-radius:20px;background:#e9edf0;overflow:hidden;margin:12px 0}.progress div{height:100%;width:0;background:var(--green);transition:width .3s}
+.badges{display:flex;gap:9px}.badge{background:#f5f7f8;border-radius:12px;padding:12px 8px;text-align:center;flex:1;font-size:24px}.badge small{display:block;font-size:10px;color:var(--muted);font-weight:800}
+.hidden{display:none!important}.quiz{max-width:650px;margin:24px auto;padding:0 18px}.quiz-top{display:flex;align-items:center;gap:14px;margin-bottom:25px}.close{border:0;background:none;font-size:25px;color:#85919a}.bar{height:12px;background:#e8edef;border-radius:20px;flex:1;overflow:hidden}.bar div{height:100%;background:var(--green);width:0;transition:width .3s}
+.quiz h2{font-size:25px;line-height:1.3;margin:14px 0 22px}.q-emoji{font-size:56px;text-align:center;margin:8px}.answers{display:grid;gap:12px}.answer{background:#fff;border:2px solid #dce2e6;border-radius:14px;padding:15px;text-align:left;font-weight:750;color:var(--ink);box-shadow:0 3px 0 #e1e6e9}.answer:hover{border-color:#9cce85}.answer.selected{border-color:var(--blue);background:#edf9ff}.answer.correct{border-color:var(--green);background:#efffe6}.answer.wrong{border-color:#ff6868;background:#fff0f0}
+.quiz-bottom{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--line);padding:16px max(18px,calc((100vw - 650px)/2));display:flex;align-items:center;justify-content:space-between;gap:14px}.feedback{font-weight:850}.feedback.good{color:var(--dark)}.feedback.bad{color:#df4a4a}
+.result{text-align:center;padding:30px 22px}.result-emoji{font-size:75px}.result h1{font-size:34px}.result-stats{display:flex;justify-content:center;gap:12px;margin:22px 0}.result-stats div{background:#f4f7f8;padding:15px;border-radius:14px;min-width:90px;font-weight:900}.result-stats small{display:block;color:var(--muted);font-size:11px}
+@media(max-width:760px){.wrap{grid-template-columns:1fr;margin:16px auto}.side{display:grid;grid-template-columns:1fr 1fr;gap:10px}.side .panel{margin-bottom:0}.stats{gap:8px;font-size:13px}.brand{font-size:18px}.top{padding:0 14px}.welcome{padding:18px}.mascot{font-size:48px}h1{font-size:25px}.lesson{padding:11px}.lesson .btn{padding:9px 11px}.side .panel{padding:14px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">🌿 NaturaQuest</div>
+  <div class="stats">
+    <div class="stat">🔥 <span id="streak">1</span><small>RACHA</small></div>
+    <div class="stat">💎 <span id="gems">0</span><small>GEMAS</small></div>
+    <div class="stat">❤️ <span id="lives">5</span><small>VIDAS</small></div>
+  </div>
+</header>
+<main id="home" class="wrap">
+  <section>
+    <div class="panel welcome">
+      <div><div class="eyebrow">¡Tu aventura comienza!</div><h1>Aprende ciencias<br>jugando 🌎</h1><p>Completa lecciones, gana gemas y conviértete en una persona experta en la naturaleza.</p><button class="btn" onclick="startLesson(0)">¡A jugar!</button></div>
+      <div class="mascot">🦉</div>
+    </div>
+    <div class="panel">
+      <div class="unit-head"><div><div class="eyebrow">Unidad 1</div><h2 style="margin:5px 0">Exploradores de la naturaleza</h2><p>Aprende algo nuevo en cada nivel.</p></div><span class="pill">🌱 PRINCIPIANTE</span></div>
+      <div class="lesson"><div class="lesson-icon">🌱</div><div class="lesson-text"><strong>1. El mundo de los seres vivos</strong><span>Plantas, animales y vida · 5 preguntas</span></div><button class="btn" onclick="startLesson(0)">Jugar</button></div>
+      <div class="lesson"><div class="lesson-icon">🌍</div><div class="lesson-text"><strong>2. Nuestro planeta</strong><span>Agua, aire y Tierra · 5 preguntas</span></div><button class="btn" onclick="startLesson(1)">Jugar</button></div>
+      <div class="lesson"><div class="lesson-icon">🫀</div><div class="lesson-text"><strong>3. El cuerpo humano</strong><span>Órganos y sentidos · 5 preguntas</span></div><button class="btn" onclick="startLesson(2)">Jugar</button></div>
+      <div class="lesson"><div class="lesson-icon">⚡</div><div class="lesson-text"><strong>4. Energía y materia</strong><span>Fuerzas y cambios · 5 preguntas</span></div><button class="btn" onclick="startLesson(3)">Jugar</button></div>
+    </div>
+  </section>
+  <aside class="side">
+    <div class="panel daily"><div style="font-size:28px">🎯</div><strong>Reto diario</strong><p>Responde 5 preguntas y gana una recompensa.</p><div class="progress"><div id="dailyBar"></div></div><small id="dailyText">0 de 5 preguntas respondidas</small></div>
+    <div class="panel"><h2>🏆 Tus logros</h2><div class="badges"><div class="badge">🌿<small>Novato</small></div><div class="badge">🧠<small>Curioso</small></div><div class="badge">⭐<small>Estrella</small></div></div><p id="bestText">¡Completa tu primera lección!</p></div>
+    <div class="panel"><h2>📚 Tu progreso</h2><div class="progress"><div id="totalBar"></div></div><strong id="totalText">0 puntos ganados</strong><p>¡Cada respuesta te hace crecer!</p></div>
+  </aside>
+</main>
+<section id="game" class="quiz hidden">
+  <div class="quiz-top"><button class="close" onclick="exitGame()" aria-label="Salir">×</button><div class="bar"><div id="questionBar"></div></div><strong id="qCount">1/5</strong></div>
+  <div id="questionContent"></div>
+</section>
+<div id="quizBottom" class="quiz-bottom hidden"><div id="feedback" class="feedback">Elige una respuesta</div><button id="checkBtn" class="btn" onclick="checkAnswer()">Comprobar</button></div>
+<section id="result" class="quiz hidden"><div class="panel result"><div class="result-emoji" id="resultEmoji">🎉</div><div class="eyebrow">LECCIÓN COMPLETADA</div><h1 id="resultTitle">¡Buen trabajo!</h1><p id="resultMessage">Sigue aprendiendo y explorando.</p><div class="result-stats"><div>💎 <span id="earned">0</span><small>GEMAS</small></div><div>✅ <span id="correctCount">0</span><small>ACERTADAS</small></div><div>⚡ <span id="xp">0</span><small>XP</small></div></div><button class="btn" onclick="goHome()">Continuar</button></div></section>
+<script>
+const lessons=[
+{title:"El mundo de los seres vivos",emoji:"🌱",questions:[
+{q:"¿Qué necesitan las plantas para fabricar su alimento?",e:"🌿",a:["Luz solar, agua y dióxido de carbono","Solo tierra y piedras","Carne y oxígeno","Arena y sal"],c:0,why:"Las plantas usan la luz solar, el agua y el dióxido de carbono durante la fotosíntesis."},
+{q:"¿Cuál de estos animales es un mamífero?",e:"🐾",a:["Tortuga","Delfín","Gallina","Rana"],c:1,why:"El delfín es un mamífero: respira aire y alimenta a sus crías con leche."},
+{q:"¿Qué parte de la planta absorbe agua del suelo?",e:"🌻",a:["Las flores","Las hojas","Las raíces","Los frutos"],c:2,why:"Las raíces sujetan la planta y absorben agua y minerales del suelo."},
+{q:"¿Cómo se llama el proceso por el que las plantas producen alimento usando luz?",e:"☀️",a:["Digestión","Fotosíntesis","Evaporación","Respiración animal"],c:1,why:"La fotosíntesis transforma la energía de la luz en energía química."},
+{q:"¿Cuál es un ser vivo?",e:"🦋",a:["Una roca","Una nube","Una mariposa","Un vaso"],c:2,why:"La mariposa nace, crece, necesita energía y cumple un ciclo de vida."}]},
+{title:"Nuestro planeta",emoji:"🌍",questions:[
+{q:"¿Qué gas necesitamos principalmente para respirar?",e:"💨",a:["Helio","Oxígeno","Hidrógeno","Metano"],c:1,why:"Nuestro cuerpo utiliza el oxígeno del aire para obtener energía."},
+{q:"¿Qué porcentaje aproximado de la superficie terrestre está cubierto por agua?",e:"🌊",a:["10 %","30 %","71 %","95 %"],c:2,why:"Cerca del 71 % de la superficie de la Tierra está cubierta por agua."},
+{q:"¿Cuál es la estrella más cercana a la Tierra?",e:"☀️",a:["Sirio","La Luna","El Sol","Marte"],c:2,why:"El Sol es la estrella del sistema solar y la fuente principal de energía para la Tierra."},
+{q:"¿Qué acción ayuda a cuidar el planeta?",e:"♻️",a:["Arrojar basura al río","Dejar luces encendidas","Separar los residuos para reciclar","Desperdiciar agua"],c:2,why:"Separar los residuos facilita el reciclaje y reduce la basura."},
+{q:"¿Cómo se llama la capa de gases que rodea la Tierra?",e:"🌤️",a:["Atmósfera","Hidrosfera","Corteza","Manto"],c:0,why:"La atmósfera es la envoltura de gases que rodea nuestro planeta."}]},
+{title:"El cuerpo humano",emoji:"🫀",questions:[
+{q:"¿Qué órgano bombea la sangre por el cuerpo?",e:"❤️",a:["Pulmón","Estómago","Corazón","Riñón"],c:2,why:"El corazón impulsa la sangre a través del sistema circulatorio."},
+{q:"¿Qué órgano usamos principalmente para respirar?",e:"🫁",a:["Pulmones","Hígado","Intestino","Cerebro"],c:0,why:"Los pulmones permiten el intercambio de oxígeno y dióxido de carbono."},
+{q:"¿Qué parte del cuerpo coordina pensamientos y movimientos?",e:"🧠",a:["Piel","Cerebro","Páncreas","Vejiga"],c:1,why:"El cerebro procesa información y coordina muchas funciones del organismo."},
+{q:"¿Cuál de estos es un sentido humano?",e:"👀",a:["Digestión","Circulación","Visión","Crecimiento"],c:2,why:"La visión permite detectar luz, formas y colores mediante los ojos."},
+{q:"¿Para qué sirven principalmente los huesos?",e:"🦴",a:["Producir pensamientos","Sostener el cuerpo y proteger órganos","Bombear sangre","Digerir alimentos"],c:1,why:"El esqueleto da soporte, ayuda al movimiento y protege órganos como el cerebro."}]},
+{title:"Energía y materia",emoji:"⚡",questions:[
+{q:"¿En qué estado está el hielo?",e:"🧊",a:["Líquido","Gaseoso","Sólido","Plasma"],c:2,why:"El hielo es agua en estado sólido."},
+{q:"¿Qué fuente de energía es renovable?",e:"🌞",a:["Carbón","Petróleo","Gas natural","Energía solar"],c:3,why:"La energía solar proviene del Sol y se renueva naturalmente."},
+{q:"¿Qué ocurre cuando el agua líquida se convierte en vapor?",e:"♨️",a:["Congelación","Evaporación","Condensación","Fusión"],c:1,why:"La evaporación es el cambio de líquido a gas."},
+{q:"¿Qué fuerza nos mantiene sobre la superficie terrestre?",e:"🍎",a:["Gravedad","Magnetismo únicamente","Electricidad","Fricción del aire"],c:0,why:"La gravedad atrae los objetos hacia el centro de la Tierra."},
+{q:"¿Cuál de estos materiales suele ser buen conductor eléctrico?",e:"🔌",a:["Madera seca","Plástico","Cobre","Goma"],c:2,why:"El cobre es un metal que permite el movimiento de cargas eléctricas."}]}
+];
+let lessonIndex=0,qi=0,selected=null,locked=false,correct=0,answered=0;
+let data=JSON.parse(localStorage.getItem("naturaquest")||'{"gems":0,"xp":0,"streak":1,"completed":[],"daily":0,"best":0}');
+function save(){localStorage.setItem("naturaquest",JSON.stringify(data));updateStats()}
+function updateStats(){document.getElementById("gems").textContent=data.gems;document.getElementById("streak").textContent=data.streak;document.getElementById("lives").textContent="∞";document.getElementById("dailyBar").style.width=Math.min(100,data.daily/5*100)+"%";document.getElementById("dailyText").textContent=Math.min(data.daily,5)+" de 5 preguntas respondidas";document.getElementById("totalBar").style.width=Math.min(100,data.completed.length/4*100)+"%";document.getElementById("totalText").textContent=data.xp+" puntos ganados";document.getElementById("bestText").textContent=data.completed.length?data.completed.length+" de 4 lecciones completadas":"¡Completa tu primera lección!"}
+function startLesson(n){lessonIndex=n;qi=0;correct=0;answered=0;selected=null;locked=false;document.getElementById("home").classList.add("hidden");document.getElementById("result").classList.add("hidden");document.getElementById("game").classList.remove("hidden");document.getElementById("quizBottom").classList.remove("hidden");renderQuestion()}
+function renderQuestion(){const lesson=lessons[lessonIndex],q=lesson.questions[qi];selected=null;locked=false;document.getElementById("qCount").textContent=(qi+1)+"/"+lesson.questions.length;document.getElementById("questionBar").style.width=(qi/lesson.questions.length*100)+"%";document.getElementById("questionContent").innerHTML=`<div class="eyebrow">${lesson.title}</div><div class="q-emoji">${q.e}</div><h2>${q.q}</h2><div class="answers">${q.a.map((a,i)=>`<button class="answer" data-index="${i}" onclick="selectAnswer(${i})"><span style="color:#8b98a1;margin-right:10px">${["A","B","C","D"][i]}</span>${a}</button>`).join("")}</div>`;document.getElementById("feedback").textContent="Elige una respuesta";document.getElementById("feedback").className="feedback";document.getElementById("checkBtn").textContent="Comprobar";document.getElementById("checkBtn").disabled=false}
+function selectAnswer(i){if(locked)return;selected=i;document.querySelectorAll(".answer").forEach((b,j)=>b.classList.toggle("selected",i===j));document.getElementById("feedback").textContent="¡Listo para comprobar!";document.getElementById("checkBtn").disabled=false}
+function checkAnswer(){if(selected===null||locked)return;const q=lessons[lessonIndex].questions[qi];locked=true;answered++;data.daily++;const buttons=[...document.querySelectorAll(".answer")];buttons.forEach((b,i)=>{b.disabled=true;if(i===q.c)b.classList.add("correct");else if(i===selected)b.classList.add("wrong")});const good=selected===q.c;if(good){correct++;data.gems+=10;data.xp+=10;document.getElementById("feedback").textContent="¡Excelente! "+q.why;document.getElementById("feedback").className="feedback good"}else{document.getElementById("feedback").textContent="¡Sigue intentando! "+q.why;document.getElementById("feedback").className="feedback bad"}save();document.getElementById("checkBtn").textContent=qi===4?"Ver resultados":"Continuar";document.getElementById("checkBtn").onclick=nextQuestion}
+function nextQuestion(){if(!locked)return;if(qi<4){qi++;document.getElementById("checkBtn").onclick=checkAnswer;renderQuestion()}else finishLesson()}
+function finishLesson(){const earned=correct*10; if(!data.completed.includes(lessonIndex))data.completed.push(lessonIndex);data.best=Math.max(data.best,correct);save();document.getElementById("game").classList.add("hidden");document.getElementById("quizBottom").classList.add("hidden");document.getElementById("result").classList.remove("hidden");document.getElementById("resultEmoji").textContent=correct===5?"🏆":correct>=3?"🎉":"🌱";document.getElementById("resultTitle").textContent=correct===5?"¡Perfecto!":correct>=3?"¡Muy bien!":"¡Buen intento!";document.getElementById("resultMessage").textContent=`Terminaste ${lessons[lessonIndex].title}. ¡Cada intento te ayuda a aprender!`;document.getElementById("earned").textContent=earned;document.getElementById("correctCount").textContent=correct+"/5";document.getElementById("xp").textContent=correct*10;document.getElementById("checkBtn").onclick=checkAnswer}
+function exitGame(){if(confirm("¿Quieres salir de la lección? Tu progreso ganado se conserva.")){document.getElementById("game").classList.add("hidden");document.getElementById("quizBottom").classList.add("hidden");goHome()}}
+function goHome(){document.getElementById("result").classList.add("hidden");document.getElementById("home").classList.remove("hidden");updateStats()}
+updateStats();
+</script>
+</body>
+</html>
